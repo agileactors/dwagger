@@ -43,6 +43,7 @@ public class JdbcMetadataServiceImpl implements JdbcMetadataService {
         this.schemaMetaDataRepository = schemaMetaDataRepository;
     }
 
+    @Override
     public void checkSchemaMetadata() {
 
         try (Connection connection = getConnection()) {
@@ -60,25 +61,16 @@ public class JdbcMetadataServiceImpl implements JdbcMetadataService {
         }
     }
 
-
     @Override
     public Schema save(Schema schema) {
         return schemaMetaDataRepository.save(schema);
     }
 
-    @Override
-    public boolean IfExist(String schemaName) {
-        return schemaMetaDataRepository.
-                exists(Example.of(
-                        new Schema(schemaName),
-                        ExampleMatcher.matchingAny()));
-    }
 
     @Override
     public Schema createSchemaMetadata(Connection connection) {
         Schema schema = new Schema();
         schema.setName(dbSchema);
-        schema.setDescription("Add Schema Description");
         schema.setTables(getTables(connection));
         return save(schema);
     }
@@ -93,6 +85,13 @@ public class JdbcMetadataServiceImpl implements JdbcMetadataService {
         return collectSchemaMetadata(dbSchema);
     }
 
+    @Override
+    public boolean IfExist(String schemaName) {
+        return schemaMetaDataRepository.
+                exists(Example.of(
+                        new Schema(schemaName),
+                        ExampleMatcher.matchingAny()));
+    }
 
     private final List<Table> getTables(final Connection connection) {
 
@@ -109,7 +108,6 @@ public class JdbcMetadataServiceImpl implements JdbcMetadataService {
                 String tableName = rs.getString("TABLE_NAME");
                 Table table = new Table();
                 table.setName(tableName);
-                table.setDescription("Add Table description");
                 table.setColumns(getTableColumns(tableName, metaData));
                 tables.add(table);
             }
@@ -129,7 +127,6 @@ public class JdbcMetadataServiceImpl implements JdbcMetadataService {
             String columnName = rs.getString("COLUMN_NAME");
             Column column = new Column();
             column.setName(columnName);
-            column.setDescription("Add column description");
             columns.add(column);
         }
         return (columns);

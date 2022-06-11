@@ -24,7 +24,9 @@ public class Schema {
 
 
     public Schema() {
+
         tables = new ArrayList<>();
+        this.description = "";
     }
 
     public Schema(String name) {
@@ -45,6 +47,24 @@ public class Schema {
         this.id = id;
     }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<Table> getTables() {
         return tables;
     }
@@ -55,31 +75,6 @@ public class Schema {
         this.tables.addAll(tables);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-
-        return "Schema{" +
-                "tables=" + tables +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -93,4 +88,16 @@ public class Schema {
     public int hashCode() {
         return Objects.hash(id, tables, name, description);
     }
+
+    @Override
+    public String toString() {
+
+        return "Schema{" +
+                "tables=" + tables +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+
 }

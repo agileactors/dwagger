@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<form class="schema-form-container" method="post" th:action="@{/schema}" th:object="${schema}">
+<form action="#" class="schema-form-container" method="post" th:action="@{/schema/updated}" th:object="${schema}">
     <h2 class="section-title">Schema</h2>
     <input type="hidden" th:field="*{id}"/>
     <h3 class="schema-title">
@@ -55,7 +55,7 @@
         </div>
     </th:block>
 
-    <input type="submit" value="Submit"/> <input type="reset" value="Reset"/>
+    <input type="submit" value="Submit"/>
 </form>
 
 

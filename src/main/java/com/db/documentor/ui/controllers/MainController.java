@@ -16,21 +16,28 @@ public class MainController {
 
     JdbcMetadataServiceImpl jdbcMetadataService;
 
+    @ModelAttribute("schema")
+    public Schema getMyBean() {
+        jdbcMetadataService.checkSchemaMetadata();
+        Schema schema = jdbcMetadataService.collectSchemaMetadata();
+        return schema;
+    }
+
     @Autowired
     public MainController(JdbcMetadataServiceImpl jdbcMetadataService) {
         this.jdbcMetadataService = jdbcMetadataService;
     }
 
-    @GetMapping(value = "/schema")
-    public ModelAndView index() throws SQLException {
-        jdbcMetadataService.checkSchemaMetadata();
-        Schema schema = jdbcMetadataService.collectSchemaMetadata();
-        return new ModelAndView("index").addObject("schema", schema);
+    @GetMapping(value = {"/schema", "/"})
+    public ModelAndView getSchema() throws SQLException {
+
+        return new ModelAndView("index");
     }
 
-    @PostMapping(value = "/schema")
+    @PostMapping(value = "/schema/updated")
     public String updateSchemaMetadata(@ModelAttribute("schema") Schema schema) {
         jdbcMetadataService.save(schema);
-        return "index";
+        return "redirect:/schema";
     }
+
 }

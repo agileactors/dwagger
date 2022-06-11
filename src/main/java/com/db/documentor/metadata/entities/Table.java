@@ -27,11 +27,7 @@ public class Table {
 
     public Table() {
         columns = new ArrayList<>();
-    }
-
-
-    public Table(Short id) {
-        this.id = id;
+        this.description = "";
     }
 
     public Short getId() {

@@ -10,6 +10,8 @@ public interface JdbcMetadataService {
 
     boolean IfExist(String schemaName);
 
+    void checkSchemaMetadata();
+
     Schema createSchemaMetadata(Connection connection);
 
     Schema collectSchemaMetadata(String schemaName);

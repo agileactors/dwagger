@@ -24,6 +24,7 @@ public class Column {
     private Table table;
 
     public Column() {
+        this.description = "";
     }
 
     public Short getId() {
