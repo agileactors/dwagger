@@ -1,0 +1,46 @@
+
+
+.schema-form-container{
+   max-width: 80vw;
+   text-align: center;
+   margin: auto;
+}
+
+.section-title{
+   padding: 5px;
+}
+
+.schema-title{
+   padding: 5px;
+}
+
+#schema-descr{
+   padding: 5px 20px;
+   text-align: left;
+}
+
+.table-container{
+   margin: 10% 0px;
+   border: 1px solid gray;
+}
+
+.table-descr{
+   text-align: left;
+   padding: 5px 20px;
+}
+
+table{
+   width: 90%;
+   text-align: center;
+   margin: 15px auto;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  
+}
+
+th,td{
+   height: 60px;
+}
