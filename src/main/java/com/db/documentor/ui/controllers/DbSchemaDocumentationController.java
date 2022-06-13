@@ -1,20 +1,21 @@
 package com.db.documentor.ui.controllers;
 
 import com.db.documentor.metadata.entities.Schema;
-import com.db.documentor.services.jdbc.JdbcMetadataServiceImpl;
+import com.db.documentor.services.jdbc.JdbcMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
 
 @Controller
-public class MainController {
+@ConditionalOnProperty("enable.schema.db.documentation")
+public class DbSchemaDocumentationController {
 
-    JdbcMetadataServiceImpl jdbcMetadataService;
+    JdbcMetadataService jdbcMetadataService;
 
     @ModelAttribute("schema")
     public Schema getMyBean() {
@@ -24,14 +25,14 @@ public class MainController {
     }
 
     @Autowired
-    public MainController(JdbcMetadataServiceImpl jdbcMetadataService) {
+    public DbSchemaDocumentationController(JdbcMetadataService jdbcMetadataService) {
         this.jdbcMetadataService = jdbcMetadataService;
     }
 
-    @GetMapping(value = {"/schema", "/"})
-    public ModelAndView getSchema() throws SQLException {
-
-        return new ModelAndView("index");
+    @GetMapping(value = "/schema")
+//    @EnableDbDocumentationController
+    public String getSchema() throws SQLException {
+        return "index";
     }
 
     @PostMapping(value = "/schema/updated")
