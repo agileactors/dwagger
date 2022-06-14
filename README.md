@@ -1,2 +1,2 @@
-# DB-Document-Generator-Spring-Dependency
-A Maven Dependency for generating database metadata documentation
+# Dwagger
+A tool for generating database documentation
