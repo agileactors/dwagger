@@ -19,6 +19,7 @@ public class DbSchemaDocumentationController {
 
     @ModelAttribute("schema")
     public Schema getMyBean() {
+        /*TODO -> checkMetaData must go to configuration class*/
         jdbcMetadataService.checkSchemaMetadata();
         Schema schema = jdbcMetadataService.collectSchemaMetadata();
         return schema;

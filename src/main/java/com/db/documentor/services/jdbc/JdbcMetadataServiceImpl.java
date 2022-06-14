@@ -12,7 +12,11 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.sql.*;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,24 +27,16 @@ public class JdbcMetadataServiceImpl implements JdbcMetadataService {
     private final Logger LOGGER = LoggerFactory.getLogger(JdbcMetadataServiceImpl.class);
 
     private final SchemaMetaDataRepository schemaMetaDataRepository;
-
-    @Value("${spring.datasource.url}")
-    private String datasourceUrl;
-
+    
     @Value("${spring.datasource.schema}")
     private String dbSchema;
 
-    @Value("${spring.datasource.username}")
-    private String db_username;
-
-    @Value("${spring.datasource.password}")
-    private String db_password;
-
-    private Schema schema;
+    private DataSource dataSource;
 
     @Autowired
-    public JdbcMetadataServiceImpl(SchemaMetaDataRepository schemaMetaDataRepository) {
+    public JdbcMetadataServiceImpl(SchemaMetaDataRepository schemaMetaDataRepository, DataSource dataSource) {
         this.schemaMetaDataRepository = schemaMetaDataRepository;
+        this.dataSource = dataSource;
     }
 
     @Override
@@ -134,7 +130,7 @@ public class JdbcMetadataServiceImpl implements JdbcMetadataService {
 
     private final Connection getConnection() {
         try {
-            return DriverManager.getConnection(datasourceUrl, db_username, db_password);
+            return dataSource.getConnection();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new RuntimeException(e);
